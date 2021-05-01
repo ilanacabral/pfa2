@@ -4,4 +4,6 @@ WORKDIR /usr/src/myapp
 
 ADD ./target/osworks-api-0.0.1-SNAPSHOT.jar /usr/src/myapp
 
+EXPOSE 8081
+
 CMD ["/usr/lib/jvm/java-11-amazon-corretto/bin/java","-jar", "osworks-api-0.0.1-SNAPSHOT.jar"]
