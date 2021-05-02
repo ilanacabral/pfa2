@@ -1,32 +1,39 @@
-version: "3"
+version: "3.9"
 
+networks:
+  frontend:
+       driver: bridge
+  backend:
+       driver: bridge
 services:
-  mysql:
-    #restart: always
-    #container_name: mysql
+  mysql:       
     image: mysql:5.7
+    volumes:
+      - ./src/main/resources/dbdata:/var/lib/mysql
+      - ./src/main/resources/db/initSql:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=admin
       - LANG=C.UTF-8  
     ports:
       - 3306:3306  
+    networks:
+      - backend          
       
-  app:
-    #container_name: app
-    restart: always
-    image: ilanacabral/osworks-api
-    #ports:
-    #  - "8080:8080"
+  app:   
+    restart: on-failure
+    image: ilanacabral/pfa2   
     depends_on: 
-      - mysql      
+      - mysql   
+    networks:
+      - frontend
+      - backend     
      
-  nginx:
-    #container_name: nginx
-    restart:  on-failure
+  nginx:  
+    restart: on-failure
     image: ilanacabral/nginx    
     ports:
-      - 8080:80
+      - 8000:80  
     depends_on: 
       - app
-    
- 
+    networks:
+      - frontend

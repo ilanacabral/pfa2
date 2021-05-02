@@ -1,3 +1,5 @@
+USE pfa2;
+
 INSERT INTO modulo (id, nome) VALUES (1,"Docker");
 INSERT INTO modulo (id, nome) VALUES (2,"Kubenertes");
 INSERT INTO modulo (id, nome) VALUES (3,"DDD");
