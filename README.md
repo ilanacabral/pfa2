@@ -2,9 +2,13 @@ Programa Full Cycle de Aceleração - PFA - Desafio 2
 
 A aplicação é uma API que lista os módulos de um curso. Roda em container Docker, usando MySQL também em container.
 
-Para subir os containers, rode o seguinte comando:
+Para subir os containers, rode os seguintes comandos:
 
-docker-compose up
+Clonar o repositório -> https://github.com/ilanacabral/pfa2
+
+Posicionar-se no diretório pfa2 -> cd pfa2
+
+Executar o comando -> docker-compose up -d
 
 Para executar a aplicação em qualquer browser ou via Postman
 
