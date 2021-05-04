@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 
 networks:
   frontend:
@@ -20,17 +20,18 @@ services:
       - backend          
       
   app:   
-    restart: on-failure
+    restart: always
     image: ilanacabral/pfa2   
     depends_on: 
       - mysql   
     networks:
       - frontend
-      - backend     
+      - backend
+    command: sh -c "dockerize -wait tcp://mysql:3306 -timeout 300s -wait-retry-interval 30s /usr/lib/jvm/java-11-amazon-corretto/bin/java -jar pfa2-0.0.1-SNAPSHOT.jar"       
      
   nginx:  
-    restart: on-failure
-    image: ilanacabral/nginx    
+    restart: always
+    image: ilanacabral/nginx-pfa2    
     ports:
       - 8000:80  
     depends_on: 
