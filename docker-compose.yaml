@@ -22,13 +22,15 @@ services:
   app:   
     restart: always
     image: ilanacabral/pfa2   
-    depends_on: 
+    depends_on: #verificando se o container já iniciou
       - mysql   
     networks:
       - frontend
       - backend
-    command: sh -c "dockerize -wait tcp://mysql:3306 -timeout 300s -wait-retry-interval 30s /usr/lib/jvm/java-11-amazon-corretto/bin/java -jar pfa2-0.0.1-SNAPSHOT.jar"       
-     
+    command: sh -c "dockerize -wait tcp://mysql:3306 -timeout 30s -wait-retry-interval 30s /usr/lib/jvm/java-11-amazon-corretto/bin/java -jar pfa2-0.0.1-SNAPSHOT.jar"
+    #Pode usar no lugar de command, vai sobreescrever o CMD ou ENTRYPOINT do Dockerfile :        
+    #entrypoint : sh -c "dockerize -wait tcp://mysql:3306 -timeout 300s -wait-retry-interval 30s /usr/lib/jvm/java-11-amazon-corretto/bin/java -jar pfa2-0.0.1-SNAPSHOT.jar"
+    
   nginx:  
     restart: always
     image: ilanacabral/nginx-pfa2    
@@ -38,3 +40,5 @@ services:
       - app
     networks:
       - frontend
+    #Poderia usar o dockerize ao invés do restart
+    #entrypoint : sh -c "dockerize -wait tcp://app:8081 -timeout 30s -wait-retry-interval 30s /docker-entrypoint.sh nginx -g 'daemon off;'"
